@@ -1,14 +1,18 @@
-# 🌀 Finite Scroll
+<p align="center">
+  <img src="src/assets/icon128.png" alt="Finite Scroll" width="120" height="120">
+</p>
+
+<h1 align="center">Finite Scroll</h1>
 
 > **Manifest V3 browser extension that detects doomscrolling the moment it happens and fires an *absurd* (never scary) full-screen interrupt to break the pattern.** It re-fires every N scrolls, escalating in ridiculousness, and only switches off after a 15–30 min pause — at which point everything resets. You set your goals, and an optional **Claude-powered coach** turns your *aggregated* weekly data into gentle recommendations, never lectures.
 
-🌐 **[English](#english) · [Español](#español)**
+<p align="center">🌐 <b><a href="#english">🇺🇸 English</a> · <a href="#español">🇲🇽 Español</a></b></p>
 
 ---
 
 <a name="english"></a>
 
-## 🇬🇧 English
+## 🇺🇸 English
 
 ### What it is
 
@@ -92,17 +96,11 @@ Paste the worker URL into **Options › AI layer › Proxy URL** and enable the 
 
 To make it fire faster in a demo, lower `doomThreshold` and `minItemsForTrigger` in Options › Sensitivity, or set `retriggerEveryNScrolls` to 3. Debug shortcuts: `Alt+Shift+S` force-fires, `Alt+Shift+R` resets.
 
-### Honest pitch
-
-- **Real today:** the browser — the only platform where the full loop (seeing the scroll + the overlay) works without blockers.
-- **Roadmap:** Android (AccessibilityService, ~8–12 weeks, Google Play risk) and iOS (Screen Time API → time limits only, **no** scroll detection), reusing the `data/` + AI layer.
-- Measures **accepted-pause rate**, not just minutes. References: *one sec* study (PNAS 2023), grayscale-screen RCTs.
-
 ---
 
 <a name="español"></a>
 
-## 🇪🇸 Español
+## 🇲🇽 Español
 
 ### Qué es
 
@@ -185,12 +183,6 @@ Pega la URL del worker en **Opciones › Capa IA › URL del proxy** y activa el
 6. **IA:** "✨ Generar recomendaciones" en el popup.
 
 Para afinar la sensibilidad en el demo, baja `doomThreshold` y `minItemsForTrigger` en Opciones › Sensibilidad, o `retriggerEveryNScrolls` a 3. Atajos de debug: `Alt+Shift+S` fuerza el disparo, `Alt+Shift+R` reinicia.
-
-### Honestidad del pitch
-
-- **Real hoy:** el navegador — única plataforma donde el loop completo (ver el scroll + el overlay) funciona sin bloqueos.
-- **Roadmap:** Android (AccessibilityService, ~8–12 semanas, riesgo de Google Play) e iOS (Screen Time API → solo límite de tiempo, **no** detección de scroll), reusando la capa `data/` + IA.
-- Mide **tasa de pausas aceptadas**, no solo minutos. Referencias: estudio de *one sec* (PNAS 2023), RCTs de escala de grises.
 
 ---
 
