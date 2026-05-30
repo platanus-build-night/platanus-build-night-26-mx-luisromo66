@@ -97,10 +97,12 @@ export class ScreamerOverlay implements OverlayController {
           ? `<div class="mirror">Hoy llevas <b>${opts.budgetUsedMin} min</b> de scroll</div>`
           : '';
 
-    // Tamaño del modal/screamer fijo al de nivel 4: todos los niveles se ven
-    // igual de grandes (la escalada sigue notándose en fricción, copy y oscurecimiento).
-    const SIZE_LEVEL = 4;
-    const videoMax = 220 + SIZE_LEVEL * 60;
+    // El modal SIEMPRE se ve como nivel 4 (tamaño, oscurecimiento y blur fijos):
+    // todos los niveles lucen idénticos. La escalada solo se nota en fricción y copy.
+    const VISUAL_LEVEL = 4;
+    const videoMax = 220 + VISUAL_LEVEL * 60;
+    const backdropAlpha = 0.55 + VISUAL_LEVEL * 0.1;
+    const backdropBlur = 2 + VISUAL_LEVEL * 2;
 
     const template = `
       <style>
@@ -108,8 +110,8 @@ export class ScreamerOverlay implements OverlayController {
         .backdrop {
           position: fixed; inset: 0;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(8, 10, 20, ${0.55 + opts.level * 0.1});
-          backdrop-filter: blur(${2 + opts.level * 2}px);
+          background: rgba(8, 10, 20, ${backdropAlpha});
+          backdrop-filter: blur(${backdropBlur}px);
           font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
           color: #fff; text-align: center; padding: 24px;
           ${reduced ? '' : 'animation: si-fade 0.25s ease-out;'}

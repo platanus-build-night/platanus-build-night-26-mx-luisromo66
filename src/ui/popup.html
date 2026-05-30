@@ -8,31 +8,74 @@
       :root { color-scheme: dark; }
       * { box-sizing: border-box; }
       body {
-        width: 300px; margin: 0; padding: 18px;
+        width: 340px; margin: 0; padding: 16px;
         font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
         background: #12152a; color: #eef;
       }
-      h1 { font-size: 1.1rem; margin: 0 0 2px; letter-spacing: .5px; }
-      .sub { font-size: .76rem; opacity: .6; margin-bottom: 16px; }
-      button { font: inherit; cursor: pointer; border: 0; border-radius: 10px; width: 100%; }
-      .primary { background: #6c5ce7; color: #fff; font-weight: 600; padding: 12px 14px; margin-bottom: 12px; font-size: .92rem; }
-      .primary:hover { filter: brightness(1.08); }
-      .ghost { background: transparent; color: #9aa; text-decoration: none; padding: 9px; font-size: .8rem; text-align: left; }
-      .ghost:hover { color: #cdd; background: #1a1f3d; }
-      .row { display: flex; flex-direction: column; gap: 2px; }
+      h1 { font-size: 1.05rem; margin: 0 0 2px; letter-spacing: .5px; }
+      .sub { font-size: .75rem; opacity: .6; margin-bottom: 14px; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+      .stat { background: #1c2142; border-radius: 12px; padding: 10px 12px; }
+      .stat .n { font-size: 1.35rem; font-weight: 700; }
+      .stat .l { font-size: .7rem; opacity: .7; }
+      .section-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .6px; opacity: .55; margin: 8px 0 6px; }
+      /* Gráfica de barras: minutos por día (últimos 7 días) */
+      .bars { display: flex; align-items: flex-end; gap: 5px; margin-bottom: 14px; }
+      .barcol { flex: 1; display: flex; flex-direction: column; align-items: center; }
+      .bartrack { height: 72px; width: 100%; display: flex; align-items: flex-end; background: #171c38; border-radius: 4px; overflow: hidden; }
+      .barfill { width: 100%; background: linear-gradient(180deg, #8B5CF6, #EC4899); border-radius: 4px 4px 0 0; min-height: 2px; }
+      .barlbl { font-size: .6rem; opacity: .55; margin-top: 4px; }
+      .barcol.today .barlbl { opacity: 1; color: #a78bfa; font-weight: 700; }
+      /* Heatmap semanal: 7 filas (día) × 24 columnas (hora) */
+      #heatmap { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+      .hrow { display: flex; align-items: center; gap: 4px; }
+      .hlabel { width: 12px; font-size: .58rem; opacity: .5; text-align: right; flex: 0 0 auto; }
+      .hcells { display: grid; grid-template-columns: repeat(24, 1fr); gap: 1px; flex: 1; }
+      .hcells .cell { aspect-ratio: 1; border-radius: 2px; background: #232a52; }
+      .hrow.today .hlabel { opacity: 1; color: #a78bfa; font-weight: 700; }
+      .heat-legend { font-size: .65rem; opacity: .5; margin-bottom: 14px; }
+      .card { background: #1c2142; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+      .card h3 { margin: 0 0 6px; font-size: .9rem; }
+      .card .celebration { color: #00d6a4; font-weight: 600; font-size: .85rem; }
+      .card .insight { font-size: .82rem; opacity: .9; margin: 6px 0; }
+      .rec { border-top: 1px solid #2a3163; padding-top: 8px; margin-top: 8px; }
+      .rec .t { font-weight: 600; font-size: .82rem; }
+      .rec .a { font-size: .8rem; opacity: .92; }
+      .rec .w { font-size: .72rem; opacity: .6; }
+      button { font: inherit; cursor: pointer; border: 0; border-radius: 10px; padding: 9px 12px; width: 100%; }
+      .primary { background: #6c5ce7; color: #fff; font-weight: 600; }
+      .ghost { background: transparent; color: #9aa; text-decoration: underline; padding: 6px; font-size: .75rem; }
+      .muted { font-size: .75rem; opacity: .6; }
+      .err { color: #ff7675; font-size: .75rem; }
     </style>
   </head>
   <body>
     <h1>🌀 Finite Scroll</h1>
-    <div class="sub">Tu scroll, finito.</div>
+    <div class="sub">Tu espejo de scroll de hoy</div>
 
-    <button class="primary" id="openDashboard">📊 Ver dashboard (gráficas y stats)</button>
-
-    <div class="row">
-      <button class="ghost" id="testScreamer">🧪 Probar screamer (demo)</button>
-      <button class="ghost" id="resetCounter">🔄 Reiniciar contador (en esta pestaña)</button>
-      <button class="ghost" id="openOptions">⚙️ Metas y ajustes</button>
+    <div class="grid">
+      <div class="stat"><div class="n" id="todayMin">–</div><div class="l">min hoy</div></div>
+      <div class="stat"><div class="n" id="streak">–</div><div class="l">días sin binge 🔥</div></div>
+      <div class="stat"><div class="n" id="sessions">–</div><div class="l">sesiones hoy</div></div>
+      <div class="stat"><div class="n" id="binges">–</div><div class="l">binges hoy</div></div>
+      <div class="stat"><div class="n" id="interventions">–</div><div class="l">screamers hoy</div></div>
+      <div class="stat"><div class="n" id="acceptRate">–</div><div class="l">% pausas aceptadas</div></div>
     </div>
+
+    <div class="section-title">Minutos por día · esta semana (<span id="weekMin">–</span> min)</div>
+    <div id="weekBars" class="bars"></div>
+
+    <div class="section-title">Mapa de calor · 7 días × hora</div>
+    <div id="heatmap"></div>
+    <div class="heat-legend">Cada celda = 1 hora · más claro = más scroll · hoy resaltado</div>
+
+    <div class="section-title">Coach IA (semanal)</div>
+    <div id="digest"></div>
+    <button class="primary" id="getDigest">✨ Generar recomendaciones</button>
+
+    <button class="ghost" id="testScreamer">🧪 Probar screamer (demo)</button>
+    <button class="ghost" id="resetCounter">🔄 Reiniciar contador (en esta pestaña)</button>
+    <button class="ghost" id="openOptions">⚙️ Metas y ajustes</button>
 
     <script src="popup.js"></script>
   </body>
