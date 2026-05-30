@@ -20,46 +20,12 @@ function dayLetter(i: number, len: number, now: number): string {
 
 function renderStats(s: DashboardStats) {
   $('todayMin').textContent = String(s.todayMinutes);
-  $('weekMin').textContent = String(s.weekMinutes);
   $('streak').textContent = String(s.currentStreakDays);
   $('sessions').textContent = String(s.todaySessions);
   $('binges').textContent = String(s.bingeEpisodesToday);
   $('interventions').textContent = String(s.interventionsToday);
   $('acceptRate').textContent = `${Math.round(s.acceptRate * 100)}%`;
-  renderWeekBars(s.heatmap);
   renderHeatmap(s.heatmap);
-}
-
-/** Barras de minutos totales por día (suma de cada fila del heatmap). */
-function renderWeekBars(heatmap: number[][]) {
-  const daily = heatmap.map((day) => day.reduce((a, b) => a + b, 0));
-  const max = Math.max(1, ...daily);
-  const now = Date.now();
-  const host = $('weekBars');
-  host.innerHTML = '';
-  daily.forEach((mins, i) => {
-    const isToday = i === daily.length - 1;
-    const letter = dayLetter(i, daily.length, now);
-
-    const col = document.createElement('div');
-    col.className = 'barcol' + (isToday ? ' today' : '');
-    col.title = `${letter} — ${Math.round(mins)} min`;
-
-    const track = document.createElement('div');
-    track.className = 'bartrack';
-    const fill = document.createElement('div');
-    fill.className = 'barfill';
-    fill.style.height = `${(mins / max) * 100}%`;
-    track.appendChild(fill);
-
-    const lbl = document.createElement('div');
-    lbl.className = 'barlbl';
-    lbl.textContent = letter;
-
-    col.appendChild(track);
-    col.appendChild(lbl);
-    host.appendChild(col);
-  });
 }
 
 /** Heatmap completo: 7 filas (día) × 24 columnas (hora). */

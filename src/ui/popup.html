@@ -19,13 +19,6 @@
       .stat .n { font-size: 1.35rem; font-weight: 700; }
       .stat .l { font-size: .7rem; opacity: .7; }
       .section-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .6px; opacity: .55; margin: 8px 0 6px; }
-      /* Gráfica de barras: minutos por día (últimos 7 días) */
-      .bars { display: flex; align-items: flex-end; gap: 5px; margin-bottom: 14px; }
-      .barcol { flex: 1; display: flex; flex-direction: column; align-items: center; }
-      .bartrack { height: 72px; width: 100%; display: flex; align-items: flex-end; background: #171c38; border-radius: 4px; overflow: hidden; }
-      .barfill { width: 100%; background: linear-gradient(180deg, #8B5CF6, #EC4899); border-radius: 4px 4px 0 0; min-height: 2px; }
-      .barlbl { font-size: .6rem; opacity: .55; margin-top: 4px; }
-      .barcol.today .barlbl { opacity: 1; color: #a78bfa; font-weight: 700; }
       /* Heatmap semanal: 7 filas (día) × 24 columnas (hora) */
       #heatmap { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
       .hrow { display: flex; align-items: center; gap: 4px; }
@@ -61,9 +54,6 @@
       <div class="stat"><div class="n" id="interventions">–</div><div class="l">screamers hoy</div></div>
       <div class="stat"><div class="n" id="acceptRate">–</div><div class="l">% pausas aceptadas</div></div>
     </div>
-
-    <div class="section-title">Minutos por día · esta semana (<span id="weekMin">–</span> min)</div>
-    <div id="weekBars" class="bars"></div>
 
     <div class="section-title">Mapa de calor · 7 días × hora</div>
     <div id="heatmap"></div>
