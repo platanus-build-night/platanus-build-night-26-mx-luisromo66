@@ -1,0 +1,5 @@
+{
+  "project-name": "Finite Scroll",
+  "project-oneliner": "Catches doomscrolling in real time and breaks the loop with an absurd, never-scary full-screen interrupt.",
+  "project-description": "Finite Scroll is a Manifest V3 browser extension that detects doomscrolling on infinite social feeds (Instagram, TikTok, X, Reddit, YouTube Shorts, Facebook) the moment it happens, then fires an absurd full-screen interrupt that escalates in ridiculousness and friction instead of fear. It respects accessibility (no harsh flashes, prefers-reduced-motion, system mute), resets the episode only after a real 15-30 minute pause, and keeps all raw data on-device. An optional Claude-powered coach turns aggregated weekly data into gentle, non-judgmental recommendations."
+}

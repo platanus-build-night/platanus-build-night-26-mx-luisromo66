@@ -8,3 +8,6 @@ proxy/.dev.vars
 .wrangler/
 
 test/.smoke.cjs
+
+# build artifacts
+*.zip
