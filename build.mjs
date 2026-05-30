@@ -13,6 +13,7 @@ const entries = {
   popup: 'src/ui/popup.ts',
   options: 'src/ui/options.ts',
   demo: 'src/ui/demo.ts',
+  dashboard: 'src/ui/dashboard.ts',
 };
 
 async function copyStatic() {
@@ -20,6 +21,7 @@ async function copyStatic() {
   await cp('src/ui/popup.html', `${outdir}/popup.html`);
   await cp('src/ui/options.html', `${outdir}/options.html`);
   await cp('src/ui/demo.html', `${outdir}/demo.html`);
+  await cp('src/ui/dashboard.html', `${outdir}/dashboard.html`);
   if (existsSync('src/assets')) {
     await cp('src/assets', `${outdir}/assets`, { recursive: true });
   }
