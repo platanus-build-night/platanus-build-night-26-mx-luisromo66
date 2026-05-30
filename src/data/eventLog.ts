@@ -2,7 +2,7 @@
 // Nunca se guarda texto de contenido ni IDs de creadores.
 import type { ScrollEvent } from './schema';
 
-const DB_NAME = 'scroll_infinito';
+const DB_NAME = 'finite_scroll';
 const STORE = 'events';
 const DB_VERSION = 1;
 const RETENTION_MS = 90 * 24 * 60 * 60 * 1000; // ~90 días de crudos

@@ -88,14 +88,14 @@ export class StateMachine {
     this.d.overlay.hide();
     this.resetEpisode();
     this.state = 'WATCHING';
-    console.log('[SCROLL_INFINITO] contador reiniciado a mano (scrolls/items/nivel = 0)');
+    console.log('[Finite Scroll] contador reiniciado a mano (scrolls/items/nivel = 0)');
   }
 
   /** Dispara el screamer a mano (atajo de teclado / consola). Útil para demo. */
   async forceInterrupt() {
     if (this.interrupting) return;
     const { score, screens } = this.currentScore();
-    console.log('[SCROLL_INFINITO] disparo manual del screamer');
+    console.log('[Finite Scroll] disparo manual del screamer');
     await this.fireInterrupt('first', Math.max(score, this.d.config.doomThreshold), screens);
   }
 
@@ -126,7 +126,7 @@ export class StateMachine {
     const idleMs = now - this.lastActivityTs;
     const cooldownMs = cfg.cooldownMinutes * 60_000;
     if (this.level > 0 && idleMs >= cooldownMs) {
-      console.log('[SCROLL_INFINITO] inactividad alcanzada -> reset (reinicia todo)');
+      console.log('[Finite Scroll] inactividad alcanzada -> reset (reinicia todo)');
       this.resetEpisode();
       this.state = 'COOLDOWN';
       return;
@@ -135,7 +135,7 @@ export class StateMachine {
 
     if (score > 0.05 || scrolls > 0) {
       console.log(
-        `[SCROLL_INFINITO] score=${score.toFixed(2)} items=${this.d.observer.itemsAppended} scrolls=${scrolls} idle=${Math.round(idleMs / 1000)}s state=${this.state} L=${this.level}`,
+        `[Finite Scroll] score=${score.toFixed(2)} items=${this.d.observer.itemsAppended} scrolls=${scrolls} idle=${Math.round(idleMs / 1000)}s state=${this.state} L=${this.level}`,
       );
     }
 
@@ -182,7 +182,7 @@ export class StateMachine {
         soundEnabled: this.d.config.soundEnabled,
       });
     } catch (e) {
-      console.log('[SCROLL_INFINITO] error al mostrar el screamer:', e);
+      console.log('[Finite Scroll] error al mostrar el screamer:', e);
     } finally {
       // Siempre desbloquea, aunque el render falle, para no congelar la máquina.
       this.interrupting = false;

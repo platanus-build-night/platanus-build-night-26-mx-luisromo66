@@ -1,5 +1,5 @@
 {
-  "name": "scroll-infinito",
+  "name": "finite-scroll",
   "version": "0.1.0",
   "description": "Extensión que detecta el doomscrolling y dispara un screamer absurdo para romper el patrón.",
   "private": true,

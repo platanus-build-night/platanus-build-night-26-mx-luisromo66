@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-SCROLL_INFINITO is a Manifest V3 browser extension that detects doomscrolling on social feeds in real time and fires an **absurd (never scary) full-screen "screamer"** to break the pattern. It escalates in ridiculousness/friction (L1→L4), not horror, and respects WCAG 2.3.1 (no flashes >3/sec), `prefers-reduced-motion`, and system mute. An optional Claude-powered coach turns **aggregated weekly data only** into non-judgmental recommendations.
+Finite Scroll is a Manifest V3 browser extension that detects doomscrolling on social feeds in real time and fires an **absurd (never scary) full-screen "screamer"** to break the pattern. It escalates in ridiculousness/friction (L1→L4), not horror, and respects WCAG 2.3.1 (no flashes >3/sec), `prefers-reduced-motion`, and system mute. An optional Claude-powered coach turns **aggregated weekly data only** into non-judgmental recommendations.
 
 The codebase is in Spanish (comments, UI copy, the AI system prompt). Keep new comments/UI text in Spanish to match.
 
@@ -43,7 +43,7 @@ Three runtime contexts communicate; understand the boundaries before changing me
 - **Re-trigger:** every `retriggerEveryNScrolls` scrolls, escalating one level (capped at `MAX_LEVEL = 4`).
 - **Reset only on real inactivity:** the cooldown (15–30 min) resets the episode only when scrolling actually stops — buttons ("Ya terminé" / "Seguir") never grant immunity. This is by design; don't add per-button cooldown.
 
-`src/content/index.ts` bootstraps: picks a `SiteAdapter`, hooks SPA routing (`history.pushState/replaceState` + `popstate` + a 1s URL poll, because feeds never full-reload and Shorts/Reels change URL per item), and wires good-exit detection (route change, hidden tab). Debug handles: `Alt+Shift+S` force-fires, `Alt+Shift+R` resets, `window.__SCROLL_INFINITO` exposes `{ machine, sensor, observer }` (isolated world).
+`src/content/index.ts` bootstraps: picks a `SiteAdapter`, hooks SPA routing (`history.pushState/replaceState` + `popstate` + a 1s URL poll, because feeds never full-reload and Shorts/Reels change URL per item), and wires good-exit detection (route change, hidden tab). Debug handles: `Alt+Shift+S` force-fires, `Alt+Shift+R` resets, `window.__FINITE_SCROLL` exposes `{ machine, sensor, observer }` (isolated world).
 
 ### Site support is a single table
 
@@ -55,7 +55,7 @@ Three runtime contexts communicate; understand the boundaries before changing me
 
 ### Data + privacy model
 
-- `src/data/eventLog.ts` — append-only IndexedDB log (`scroll_infinito` DB), **on-device only**, ~90-day retention, daily prune via alarm. Never stores content text or creator IDs.
+- `src/data/eventLog.ts` — append-only IndexedDB log (`finite_scroll` DB), **on-device only**, ~90-day retention, daily prune via alarm. Never stores content text or creator IDs.
 - `src/data/rollups.ts` → `DashboardStats` for the popup (today/week minutes, heatmap, accept rate).
 - `src/data/patternDetector.ts` → `buildWeeklyProfile` aggregates events into a `WeeklyProfile` — **the only thing that ever leaves the device.** `seededProfile()` is a demo fallback when there are <5 sessions, so the AI demo always works.
 - `src/data/schema.ts` — the shared contract: `SiteId`, `UserConfig`/`DEFAULT_CONFIG`, the `ScrollEvent` union, the content↔background `Msg`/`MsgResponse` protocol, and `WeeklyProfile`/`AIDigest`. This file is meant to be reusable by future Android/iOS siblings; treat it as the source of truth and update it before changing any cross-context payload.

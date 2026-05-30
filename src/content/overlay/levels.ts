@@ -68,7 +68,7 @@ const BASE: LevelSpec[] = [
     frictionSec: 8,
     emojiSize: 14,
     emojis: ['🚨', '🤠', '🦖', '🫠'],
-    title: 'SCROLL_INFINITO dice: ya estuvo 🤠',
+    title: 'Finite Scroll dice: ya estuvo 🤠',
     subtitlePool: [
       'Mira tu día. Mantén presionado si DE VERDAD quieres seguir.',
       'Tu yo de mañana te lo va a agradecer 🫠',

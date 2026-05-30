@@ -25,7 +25,7 @@ export function initScreamerAudio(url: string) {
         audio!.pause();
         audio!.currentTime = 0;
         primed = true;
-        console.log('[SCROLL_INFINITO] audio desbloqueado para esta sesión 🔊');
+        console.log('[Finite Scroll] audio desbloqueado para esta sesión 🔊');
       })
       .catch(() => {});
   };
@@ -55,7 +55,7 @@ export function primeNow(): Promise<void> {
     audio!.currentTime = 0;
     audio!.volume = 1;
     primed = true;
-    console.log('[SCROLL_INFINITO] audio desbloqueado (clic explícito) 🔊');
+    console.log('[Finite Scroll] audio desbloqueado (clic explícito) 🔊');
   });
 }
 

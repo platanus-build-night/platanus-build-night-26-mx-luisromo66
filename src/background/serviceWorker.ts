@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener((msg: Msg, _sender, sendResponse: (r: MsgRe
   handle(msg)
     .then(sendResponse)
     .catch((e) => {
-      console.debug('[SCROLL_INFINITO][bg] error', e);
+      console.debug('[Finite Scroll][bg] error', e);
       sendResponse({ kind: 'OK' });
     });
   return true; // respuesta asíncrona

@@ -7,7 +7,7 @@ import { prefersReducedMotion } from './a11y';
 import { initScreamerAudio, playScreamerSound, stopScreamerSound } from './audioUnlock';
 import type { UserConfig } from '../../data/schema';
 
-const HOST_ID = 'scroll-infinito-overlay-host';
+const HOST_ID = 'finite-scroll-overlay-host';
 
 export class ScreamerOverlay implements OverlayController {
   private host?: HTMLElement;
@@ -162,7 +162,7 @@ export class ScreamerOverlay implements OverlayController {
               ? `<button class="hold" data-act="hold"><span class="lbl">Mantén presionado para seguir…</span><div class="fill"></div></button>`
               : `<button class="secondary" data-act="continue" ${spec.frictionSec > 0 ? 'disabled' : ''}>Seguir scrolleando${spec.frictionSec > 0 ? ` (${spec.frictionSec})` : ''}</button>`}
           </div>
-          <div class="foot">SCROLL_INFINITO · nivel ${opts.level}</div>
+          <div class="foot">Finite Scroll · nivel ${opts.level}</div>
         </div>
       </div>
     `;
@@ -261,7 +261,7 @@ function getTTPolicy() {
   if (ttPolicy !== undefined) return ttPolicy;
   const tt = (window as unknown as { trustedTypes?: { createPolicy: (n: string, r: object) => { createHTML: (s: string) => unknown } } }).trustedTypes;
   try {
-    ttPolicy = tt ? tt.createPolicy('scroll-infinito', { createHTML: (s: string) => s }) : null;
+    ttPolicy = tt ? tt.createPolicy('finite-scroll', { createHTML: (s: string) => s }) : null;
   } catch {
     ttPolicy = null; // el sitio bloquea crear políticas con allowlist
   }
@@ -284,6 +284,6 @@ function setShadowHTML(root: ShadowRoot, html: string) {
       while (wrapper.firstChild) root.appendChild(wrapper.firstChild);
     }
   } catch (e) {
-    console.log('[SCROLL_INFINITO] no se pudo renderizar el overlay:', e);
+    console.log('[Finite Scroll] no se pudo renderizar el overlay:', e);
   }
 }

@@ -9,26 +9,26 @@ import { showSoundPrompt } from './soundPrompt';
 import * as bg from './bgClient';
 
 // Log inmediato al inyectarse (antes de cualquier bail-out), siempre visible.
-console.log('%c[SCROLL_INFINITO]', 'color:#6c5ce7;font-weight:bold', 'content script inyectado en', location.host, location.pathname);
+console.log('%c[Finite Scroll]', 'color:#6c5ce7;font-weight:bold', 'content script inyectado en', location.host, location.pathname);
 
 async function main() {
   const adapter = getAdapterForHost(location.host);
   if (!adapter) {
-    console.log('[SCROLL_INFINITO] host no soportado:', location.host);
+    console.log('[Finite Scroll] host no soportado:', location.host);
     return;
   }
 
   const config = await bg.getConfig().catch((e) => {
-    console.log('[SCROLL_INFINITO] no se pudo leer la config (¿service worker caído?):', e);
+    console.log('[Finite Scroll] no se pudo leer la config (¿service worker caído?):', e);
     return null;
   });
   if (!config) return;
   if (!config.perSiteEnabled[adapter.id]) {
-    console.log('[SCROLL_INFINITO] sitio desactivado en Opciones:', adapter.id);
+    console.log('[Finite Scroll] sitio desactivado en Opciones:', adapter.id);
     return;
   }
 
-  console.log('[SCROLL_INFINITO] activo en', adapter.id, '· feed actual:', adapter.isFeedPath(location.pathname));
+  console.log('[Finite Scroll] activo en', adapter.id, '· feed actual:', adapter.isFeedPath(location.pathname));
 
   // Pide activar el sonido con un clic (desbloquea el audio del screamer para la sesión).
   // Siempre se ofrece; el usuario puede cerrarlo con la ✕.
@@ -127,8 +127,8 @@ async function main() {
   });
 
   // Debug interno (mundo aislado, no accesible desde la consola de la página).
-  (window as unknown as Record<string, unknown>).__SCROLL_INFINITO = { machine, sensor, observer };
-  console.log('[SCROLL_INFINITO] listo · Alt+Shift+S = disparar screamer · Alt+Shift+R = reiniciar contador');
+  (window as unknown as Record<string, unknown>).__FINITE_SCROLL = { machine, sensor, observer };
+  console.log('[Finite Scroll] listo · Alt+Shift+S = disparar screamer · Alt+Shift+R = reiniciar contador');
 }
 
-main().catch((e) => console.log('[SCROLL_INFINITO] init error', e));
+main().catch((e) => console.log('[Finite Scroll] init error', e));

@@ -3,7 +3,7 @@
 // La extensión NUNCA ve la API key. Solo recibe el JSON validado.
 //
 // Deploy (Cloudflare):
-//   npx wrangler deploy proxy/worker.ts --name scroll-infinito-proxy
+//   npx wrangler deploy proxy/worker.ts --name finite-scroll-proxy
 //   npx wrangler secret put ANTHROPIC_API_KEY
 //
 // Luego pega la URL del worker en Opciones > Capa IA > proxyUrl.

@@ -1,4 +1,4 @@
-# 🌀 SCROLL_INFINITO
+# 🌀 Finite Scroll
 
 Extensión de navegador (Manifest V3) que **detecta el doomscrolling en el momento exacto** y dispara un **screamer absurdo** a pantalla completa para romper el patrón. Se vuelve a disparar cada N scrolls y **solo se apaga tras una pausa de 15–30 min**, momento en que todo se reinicia. Tú pones tus metas, y un **coach IA (Claude)** convierte tus datos agregados en recomendaciones semanales sin regañar.
 
@@ -52,7 +52,7 @@ Si hay pocos datos, el digest usa un perfil de ejemplo para que la demo siempre 
 
 ## Cómo probar (demo)
 
-1. Abre TikTok/Instagram y scrollea rápido. En la consola: `__SCROLL_INFINITO` expone `machine`/`sensor` para tuning en vivo.
+1. Abre TikTok/Instagram y scrollea rápido. En la consola: `__FINITE_SCROLL` expone `machine`/`sensor` para tuning en vivo.
 2. **Core loop:** el screamer aparece al primer trigger → reaparece cada N scrolls subiendo de nivel → "Ya terminé" arranca el cooldown → durante el cooldown no interrumpe → a los 15–30 min se reinicia.
 3. **Anti-evasión:** abre otra pestaña del mismo sitio durante el cooldown; no lo esquiva.
 4. **Accesibilidad:** con `prefers-reduced-motion` activo el overlay es estático.

@@ -2,7 +2,7 @@
 // audio del screamer para toda la sesión). Construido por DOM para sortear Trusted Types.
 import { primeNow, isAudioPrimed } from './overlay/audioUnlock';
 
-const HOST_ID = 'scroll-infinito-sound-prompt';
+const HOST_ID = 'finite-scroll-sound-prompt';
 
 export function showSoundPrompt() {
   if (isAudioPrimed()) return; // ya está desbloqueado
