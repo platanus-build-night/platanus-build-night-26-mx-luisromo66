@@ -97,8 +97,10 @@ export class ScreamerOverlay implements OverlayController {
           ? `<div class="mirror">Hoy llevas <b>${opts.budgetUsedMin} min</b> de scroll</div>`
           : '';
 
-    // El tamaño del video crece con el nivel (escala visual sin terror).
-    const videoMax = 220 + opts.level * 60;
+    // Tamaño del modal/screamer fijo al de nivel 4: todos los niveles se ven
+    // igual de grandes (la escalada sigue notándose en fricción, copy y oscurecimiento).
+    const SIZE_LEVEL = 4;
+    const videoMax = 220 + SIZE_LEVEL * 60;
 
     const template = `
       <style>

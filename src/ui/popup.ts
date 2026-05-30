@@ -2,37 +2,95 @@
 import { getStats, getDigest } from './uiClient';
 import type { AIDigest, DashboardStats } from '../data/schema';
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+// getDay(): 0=domingo … 6=sábado.
+const DAY_LETTERS = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+
 function $(id: string): HTMLElement {
   const el = document.getElementById(id);
   if (!el) throw new Error(`#${id} no existe`);
   return el;
 }
 
+/** Letra del día para el índice i de un arreglo de `len` días que termina HOY. */
+function dayLetter(i: number, len: number, now: number): string {
+  const date = new Date(now - (len - 1 - i) * DAY_MS);
+  return DAY_LETTERS[date.getDay()];
+}
+
 function renderStats(s: DashboardStats) {
   $('todayMin').textContent = String(s.todayMinutes);
+  $('weekMin').textContent = String(s.weekMinutes);
   $('streak').textContent = String(s.currentStreakDays);
   $('sessions').textContent = String(s.todaySessions);
   $('binges').textContent = String(s.bingeEpisodesToday);
   $('interventions').textContent = String(s.interventionsToday);
   $('acceptRate').textContent = `${Math.round(s.acceptRate * 100)}%`;
+  renderWeekBars(s.heatmap);
   renderHeatmap(s.heatmap);
 }
 
+/** Barras de minutos totales por día (suma de cada fila del heatmap). */
+function renderWeekBars(heatmap: number[][]) {
+  const daily = heatmap.map((day) => day.reduce((a, b) => a + b, 0));
+  const max = Math.max(1, ...daily);
+  const now = Date.now();
+  const host = $('weekBars');
+  host.innerHTML = '';
+  daily.forEach((mins, i) => {
+    const isToday = i === daily.length - 1;
+    const letter = dayLetter(i, daily.length, now);
+
+    const col = document.createElement('div');
+    col.className = 'barcol' + (isToday ? ' today' : '');
+    col.title = `${letter} — ${Math.round(mins)} min`;
+
+    const track = document.createElement('div');
+    track.className = 'bartrack';
+    const fill = document.createElement('div');
+    fill.className = 'barfill';
+    fill.style.height = `${(mins / max) * 100}%`;
+    track.appendChild(fill);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'barlbl';
+    lbl.textContent = letter;
+
+    col.appendChild(track);
+    col.appendChild(lbl);
+    host.appendChild(col);
+  });
+}
+
+/** Heatmap completo: 7 filas (día) × 24 columnas (hora). */
 function renderHeatmap(heatmap: number[][]) {
-  const flat = heatmap.flat();
-  const max = Math.max(1, ...flat);
+  const max = Math.max(1, ...heatmap.flat());
+  const now = Date.now();
   const host = $('heatmap');
   host.innerHTML = '';
-  // Mostramos solo HOY (última fila) en 24 columnas para que quepa; tooltip por hora.
-  const today = heatmap[heatmap.length - 1] ?? new Array(24).fill(0);
-  for (let h = 0; h < 24; h++) {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    const v = today[h] / max;
-    cell.style.background = v > 0 ? `rgba(108,92,231,${0.25 + v * 0.75})` : '#232a52';
-    cell.title = `${String(h).padStart(2, '0')}:00 — ${Math.round(today[h])} min`;
-    host.appendChild(cell);
-  }
+  heatmap.forEach((day, i) => {
+    const isToday = i === heatmap.length - 1;
+    const letter = dayLetter(i, heatmap.length, now);
+
+    const row = document.createElement('div');
+    row.className = 'hrow' + (isToday ? ' today' : '');
+    const label = document.createElement('div');
+    label.className = 'hlabel';
+    label.textContent = letter;
+    const cells = document.createElement('div');
+    cells.className = 'hcells';
+    for (let h = 0; h < 24; h++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const v = day[h] / max;
+      cell.style.background = v > 0 ? `rgba(108,92,231,${0.2 + v * 0.8})` : '#232a52';
+      cell.title = `${letter} ${String(h).padStart(2, '0')}:00 — ${Math.round(day[h])} min`;
+      cells.appendChild(cell);
+    }
+    row.appendChild(label);
+    row.appendChild(cells);
+    host.appendChild(row);
+  });
 }
 
 function renderDigest(digest: AIDigest) {

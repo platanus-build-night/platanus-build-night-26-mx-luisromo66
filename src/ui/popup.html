@@ -19,8 +19,20 @@
       .stat .n { font-size: 1.35rem; font-weight: 700; }
       .stat .l { font-size: .7rem; opacity: .7; }
       .section-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .6px; opacity: .55; margin: 8px 0 6px; }
-      #heatmap { display: grid; grid-template-columns: repeat(24, 1fr); gap: 1px; margin-bottom: 4px; }
-      #heatmap .cell { aspect-ratio: 1; border-radius: 2px; background: #232a52; }
+      /* Gráfica de barras: minutos por día (últimos 7 días) */
+      .bars { display: flex; align-items: flex-end; gap: 5px; margin-bottom: 14px; }
+      .barcol { flex: 1; display: flex; flex-direction: column; align-items: center; }
+      .bartrack { height: 72px; width: 100%; display: flex; align-items: flex-end; background: #171c38; border-radius: 4px; overflow: hidden; }
+      .barfill { width: 100%; background: linear-gradient(180deg, #8B5CF6, #EC4899); border-radius: 4px 4px 0 0; min-height: 2px; }
+      .barlbl { font-size: .6rem; opacity: .55; margin-top: 4px; }
+      .barcol.today .barlbl { opacity: 1; color: #a78bfa; font-weight: 700; }
+      /* Heatmap semanal: 7 filas (día) × 24 columnas (hora) */
+      #heatmap { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+      .hrow { display: flex; align-items: center; gap: 4px; }
+      .hlabel { width: 12px; font-size: .58rem; opacity: .5; text-align: right; flex: 0 0 auto; }
+      .hcells { display: grid; grid-template-columns: repeat(24, 1fr); gap: 1px; flex: 1; }
+      .hcells .cell { aspect-ratio: 1; border-radius: 2px; background: #232a52; }
+      .hrow.today .hlabel { opacity: 1; color: #a78bfa; font-weight: 700; }
       .heat-legend { font-size: .65rem; opacity: .5; margin-bottom: 14px; }
       .card { background: #1c2142; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
       .card h3 { margin: 0 0 6px; font-size: .9rem; }
@@ -50,9 +62,12 @@
       <div class="stat"><div class="n" id="acceptRate">–</div><div class="l">% pausas aceptadas</div></div>
     </div>
 
-    <div class="section-title">Últimos 7 días · hora del día</div>
+    <div class="section-title">Minutos por día · esta semana (<span id="weekMin">–</span> min)</div>
+    <div id="weekBars" class="bars"></div>
+
+    <div class="section-title">Mapa de calor · 7 días × hora</div>
     <div id="heatmap"></div>
-    <div class="heat-legend">Cada columna = 1 hora · más claro = más scroll</div>
+    <div class="heat-legend">Cada celda = 1 hora · más claro = más scroll · hoy resaltado</div>
 
     <div class="section-title">Coach IA (semanal)</div>
     <div id="digest"></div>
