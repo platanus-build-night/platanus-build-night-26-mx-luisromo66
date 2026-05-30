@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SCROLL_INFINITO · Metas y ajustes</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body {
+        max-width: 640px; margin: 0 auto; padding: 28px 22px 60px;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: #12152a; color: #eef;
+      }
+      h1 { font-size: 1.3rem; }
+      h2 { font-size: .95rem; text-transform: uppercase; letter-spacing: .6px; opacity: .6; margin: 26px 0 10px; border-bottom: 1px solid #2a3163; padding-bottom: 6px; }
+      .row { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 10px 0; }
+      .row label { font-size: .92rem; }
+      .row .hint { font-size: .73rem; opacity: .55; }
+      input[type="number"], select, input[type="url"], input[type="text"] {
+        background: #1c2142; color: #eef; border: 1px solid #2a3163; border-radius: 8px; padding: 8px 10px; font: inherit;
+      }
+      input[type="url"], input[type="text"] { width: 260px; }
+      input[type="range"] { width: 200px; }
+      .sites { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .site { display: flex; align-items: center; gap: 8px; background: #1c2142; padding: 8px 10px; border-radius: 8px; }
+      .val { min-width: 38px; text-align: right; font-variant-numeric: tabular-nums; }
+      button { font: inherit; cursor: pointer; border: 0; border-radius: 10px; padding: 10px 16px; }
+      .primary { background: #00b894; color: #04241c; font-weight: 700; }
+      .danger { background: #ff7675; color: #2a0b0b; font-weight: 600; }
+      #saved { color: #00d6a4; font-size: .8rem; margin-left: 12px; opacity: 0; transition: opacity .2s; }
+      #saved.show { opacity: 1; }
+      .privacy { font-size: .78rem; opacity: .7; line-height: 1.5; }
+    </style>
+  </head>
+  <body>
+    <h1>🌀 SCROLL_INFINITO · Tus metas</h1>
+    <p class="privacy">Tú pones las reglas. Todo se calcula en tu navegador; solo agregados anónimos salen al coach IA, y solo si lo activas.</p>
+
+    <h2>El screamer</h2>
+    <div class="row">
+      <div><label>Pausa que reinicia todo</label><div class="hint">Tras este tiempo quieto, el contador vuelve a cero (15–30 min).</div></div>
+      <div><input type="range" id="cooldownMinutes" min="15" max="30" step="1" /> <span class="val" id="cooldownVal"></span> min</div>
+    </div>
+    <div class="row">
+      <div><label>Re-aparece cada</label><div class="hint">Scrolls antes de volver a salir dentro del mismo episodio.</div></div>
+      <div><input type="number" id="retriggerEveryNScrolls" min="3" max="200" /> scrolls</div>
+    </div>
+    <div class="row">
+      <div><label>Intensidad de escalación</label><div class="hint">Cuánta fricción agrega cada nivel (nunca es terror, siempre absurdo).</div></div>
+      <select id="escalationIntensity">
+        <option value="suave">Suave</option>
+        <option value="normal">Normal</option>
+        <option value="intenso">Intenso</option>
+      </select>
+    </div>
+    <div class="row">
+      <div><label>Sonido en el overlay</label><div class="hint">Respeta el silencio del sistema.</div></div>
+      <input type="checkbox" id="soundEnabled" />
+    </div>
+
+    <h2>Sensibilidad (avanzado)</h2>
+    <div class="row">
+      <div><label>Umbral de doomScore</label><div class="hint">Qué tan "perdido" en el scroll antes del primer screamer (0–1).</div></div>
+      <input type="number" id="doomThreshold" min="0.1" max="0.95" step="0.05" />
+    </div>
+    <div class="row">
+      <div><label>Items mínimos</label><div class="hint">Evita disparar en una lectura larga de un solo post.</div></div>
+      <input type="number" id="minItemsForTrigger" min="1" max="100" />
+    </div>
+
+    <h2>Metas de tiempo</h2>
+    <div class="row">
+      <div><label>Budget diario</label><div class="hint">0 = sin meta. Se muestra como espejo de uso.</div></div>
+      <div><input type="number" id="dailyBudgetMinutes" min="0" max="600" /> min/día</div>
+    </div>
+    <div class="row">
+      <div><label>Plan si–entonces (opcional)</label><div class="hint">Ej: "si abro TikTok por aburrimiento, respiro y reviso mi intención".</div></div>
+      <input type="text" id="ifThenPlan" placeholder="si… entonces…" />
+    </div>
+
+    <h2>Sitios activos</h2>
+    <div class="sites" id="sites"></div>
+
+    <h2>Capa IA (opcional)</h2>
+    <div class="row">
+      <div><label>Activar coach IA</label><div class="hint">Envía solo agregados semanales (nunca contenido) al proxy.</div></div>
+      <input type="checkbox" id="aiEnabled" />
+    </div>
+    <div class="row">
+      <div><label>URL del proxy</label><div class="hint">Tu Cloudflare Worker / Vercel que guarda la API key.</div></div>
+      <input type="url" id="proxyUrl" placeholder="https://…workers.dev" />
+    </div>
+
+    <h2>Privacidad</h2>
+    <p class="privacy">Tus eventos crudos viven solo en este dispositivo (~90 días). Puedes borrarlos cuando quieras.</p>
+    <button class="danger" id="clearData">🗑️ Borrar todos mis datos</button>
+
+    <div style="margin-top:24px; display:flex; align-items:center;">
+      <button class="primary" id="save">Guardar</button>
+      <span id="saved">✓ Guardado</span>
+    </div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

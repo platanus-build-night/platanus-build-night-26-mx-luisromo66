@@ -1,0 +1,21 @@
+{
+  "name": "scroll-infinito",
+  "version": "0.1.0",
+  "description": "Extensión que detecta el doomscrolling y dispara un screamer absurdo para romper el patrón.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "esbuild test/smoke.ts --bundle --platform=node --format=cjs --outfile=test/.smoke.cjs --banner:js=\"globalThis.window={innerHeight:800,matchMedia:()=>({matches:false})};\" && node test/.smoke.cjs",
+    "proxy:dev": "wrangler dev",
+    "proxy:deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "esbuild": "^0.21.5",
+    "typescript": "^5.4.5",
+    "wrangler": "^4.95.0"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.dev.vars
+proxy/.dev.vars
+.wrangler/
+
+test/.smoke.cjs

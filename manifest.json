@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "SCROLL_INFINITO",
+  "version": "0.1.0",
+  "description": "Detecta el doomscrolling y dispara un screamer absurdo para romper el patrón. Tú pones tus metas.",
+  "permissions": ["storage", "alarms", "scripting"],
+  "host_permissions": [
+    "*://*.instagram.com/*",
+    "*://*.tiktok.com/*",
+    "*://twitter.com/*",
+    "*://x.com/*",
+    "*://*.reddit.com/*",
+    "*://*.youtube.com/*",
+    "*://*.facebook.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SCROLL_INFINITO"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.instagram.com/*",
+        "*://*.tiktok.com/*",
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://*.reddit.com/*",
+        "*://*.youtube.com/*",
+        "*://*.facebook.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": [
+        "*://*.instagram.com/*",
+        "*://*.tiktok.com/*",
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://*.reddit.com/*",
+        "*://*.youtube.com/*",
+        "*://*.facebook.com/*"
+      ]
+    }
+  ]
+}

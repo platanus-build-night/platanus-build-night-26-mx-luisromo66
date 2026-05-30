@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SCROLL_INFINITO</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body {
+        width: 340px; margin: 0; padding: 16px;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: #12152a; color: #eef;
+      }
+      h1 { font-size: 1.05rem; margin: 0 0 2px; letter-spacing: .5px; }
+      .sub { font-size: .75rem; opacity: .6; margin-bottom: 14px; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+      .stat { background: #1c2142; border-radius: 12px; padding: 10px 12px; }
+      .stat .n { font-size: 1.35rem; font-weight: 700; }
+      .stat .l { font-size: .7rem; opacity: .7; }
+      .section-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .6px; opacity: .55; margin: 8px 0 6px; }
+      #heatmap { display: grid; grid-template-columns: repeat(24, 1fr); gap: 1px; margin-bottom: 4px; }
+      #heatmap .cell { aspect-ratio: 1; border-radius: 2px; background: #232a52; }
+      .heat-legend { font-size: .65rem; opacity: .5; margin-bottom: 14px; }
+      .card { background: #1c2142; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+      .card h3 { margin: 0 0 6px; font-size: .9rem; }
+      .card .celebration { color: #00d6a4; font-weight: 600; font-size: .85rem; }
+      .card .insight { font-size: .82rem; opacity: .9; margin: 6px 0; }
+      .rec { border-top: 1px solid #2a3163; padding-top: 8px; margin-top: 8px; }
+      .rec .t { font-weight: 600; font-size: .82rem; }
+      .rec .a { font-size: .8rem; opacity: .92; }
+      .rec .w { font-size: .72rem; opacity: .6; }
+      button { font: inherit; cursor: pointer; border: 0; border-radius: 10px; padding: 9px 12px; width: 100%; }
+      .primary { background: #6c5ce7; color: #fff; font-weight: 600; }
+      .ghost { background: transparent; color: #9aa; text-decoration: underline; padding: 6px; font-size: .75rem; }
+      .muted { font-size: .75rem; opacity: .6; }
+      .err { color: #ff7675; font-size: .75rem; }
+    </style>
+  </head>
+  <body>
+    <h1>🌀 SCROLL_INFINITO</h1>
+    <div class="sub">Tu espejo de scroll de hoy</div>
+
+    <div class="grid">
+      <div class="stat"><div class="n" id="todayMin">–</div><div class="l">min hoy</div></div>
+      <div class="stat"><div class="n" id="streak">–</div><div class="l">días sin binge 🔥</div></div>
+      <div class="stat"><div class="n" id="sessions">–</div><div class="l">sesiones hoy</div></div>
+      <div class="stat"><div class="n" id="binges">–</div><div class="l">binges hoy</div></div>
+      <div class="stat"><div class="n" id="interventions">–</div><div class="l">screamers hoy</div></div>
+      <div class="stat"><div class="n" id="acceptRate">–</div><div class="l">% pausas aceptadas</div></div>
+    </div>
+
+    <div class="section-title">Últimos 7 días · hora del día</div>
+    <div id="heatmap"></div>
+    <div class="heat-legend">Cada columna = 1 hora · más claro = más scroll</div>
+
+    <div class="section-title">Coach IA (semanal)</div>
+    <div id="digest"></div>
+    <button class="primary" id="getDigest">✨ Generar recomendaciones</button>
+
+    <button class="ghost" id="testScreamer">🧪 Probar screamer (demo)</button>
+    <button class="ghost" id="resetCounter">🔄 Reiniciar contador (en esta pestaña)</button>
+    <button class="ghost" id="openOptions">⚙️ Metas y ajustes</button>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

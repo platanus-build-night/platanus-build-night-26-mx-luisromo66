@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SCROLL_INFINITO · Probar screamer</title>
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 18px; padding: 40px;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: radial-gradient(circle at 50% 30%, #1c2142, #0c0e1c);
+        color: #eef; text-align: center;
+      }
+      h1 { margin: 0; font-size: 1.6rem; }
+      p { opacity: .7; max-width: 460px; margin: 0; line-height: 1.5; }
+      .levels { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+      button {
+        font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+        border: 0; border-radius: 12px; padding: 14px 22px; color: #fff;
+        background: #6c5ce7;
+      }
+      button:hover { filter: brightness(1.1); }
+      .opts { display: flex; gap: 16px; align-items: center; font-size: .9rem; opacity: .9; }
+      #status { font-size: .85rem; opacity: .65; min-height: 1.2em; }
+      .hint { font-size: .78rem; opacity: .5; }
+    </style>
+  </head>
+  <body>
+    <h1>🌀 Probar el screamer</h1>
+    <p>Dispara el overlay sin tener que scrollear. Como das clic, el navegador permite el <b>sonido</b>.</p>
+
+    <div class="opts">
+      <label><input type="checkbox" id="sound" checked /> 🔊 con sonido</label>
+    </div>
+
+    <div class="levels">
+      <button data-level="1">Nivel 1</button>
+      <button data-level="2">Nivel 2</button>
+      <button data-level="3">Nivel 3</button>
+      <button data-level="4">Nivel 4</button>
+    </div>
+
+    <div id="status"></div>
+    <p class="hint">Nivel 1 = suave · Nivel 4 = takeover con espejo de uso. Cada botón sube la escala.</p>
+
+    <script src="demo.js"></script>
+  </body>
+</html>

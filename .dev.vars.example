@@ -1,0 +1,4 @@
+# Copia este archivo a .dev.vars (está en .gitignore) y pega tu API key.
+#   cp .dev.vars.example .dev.vars
+# Consíguela en https://console.anthropic.com/settings/keys
+ANTHROPIC_API_KEY=sk-ant-...
