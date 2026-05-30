@@ -1,7 +1,7 @@
 {
   "name": "finite-scroll",
   "version": "0.1.0",
-  "description": "Extensión que detecta el doomscrolling y dispara un screamer absurdo para romper el patrón.",
+  "description": "Detecta el infinite scroll y lo corta con una interrupción absurda (nunca aterradora) para que recuperes tu tiempo. Tú pones tus metas.",
   "private": true,
   "type": "module",
   "scripts": {

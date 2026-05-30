@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Finite Scroll",
   "version": "0.1.0",
-  "description": "Detecta el doomscrolling y dispara un screamer absurdo para romper el patrón. Tú pones tus metas.",
+  "description": "Detecta el infinite scroll y lo corta con una interrupción absurda (nunca aterradora) para recuperar tu tiempo. Tú pones tus metas.",
   "icons": {
     "16": "assets/icon16.png",
     "32": "assets/icon32.png",
